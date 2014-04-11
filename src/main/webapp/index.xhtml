@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>WEB PHOTO HOSTING</title>
+    </h:head>
+
+    <h:body>
+        <h:form enctype="multipart/form-data">
+            <p:dataTable id="imageTable"
+                         value="#{indexBean.dao.itemList}"
+                         var="item">
+
+                <p:column style="width: 18%;">
+                    <f:facet name="header">Image</f:facet>
+
+                    <p:graphicImage id="mainImage"
+                                    value="#{indexBean.image}"
+                                    height="150" width="150">
+
+                        <f:param id="imageId"
+                                 name="imageId"
+                                 value="#{item.imageId}"/>
+                    </p:graphicImage>
+
+                    <f:facet name="footer">
+                        <p:commandButton id="addImageButton"
+                                         value="Add new image"
+                                         style="float: left; height:45px"
+                                         icon="ui-icon-plus"
+                                         onclick="addDialog.show()"/>
+                    </f:facet>
+                </p:column>
+
+                <p:column style="width: 37%;"
+                          filterBy="description"
+                          filterMatchMode="contains">
+                    <f:facet name="header">Image Description</f:facet>
+                    <p:outputLabel value="#{item.description}" />
+                </p:column>
+
+                <p:column style="width: 25%;"
+                          sortBy="date">
+                    <f:facet name="header">Date of creation</f:facet>
+                    <p:outputLabel value="#{item.date}" />
+                </p:column>
+
+                <p:column style="width: 15%;">
+                    <f:facet name="header">Count of likes</f:facet>
+                    <p:outputLabel value="#{item.countOfLikes}"/>
+                </p:column>
+
+                <p:column style="width: 5%">
+                    <f:facet name="header">Actions</f:facet>
+                    <p:commandButton id="viewButton"
+                                     title="View this picture"
+                                     style="width: 40px; height:25px"
+                                     styleClass="ui-button-icon-only secondary small"
+                                     icon="ui-icon-search"
+                                     ajax="false"
+                                     action="view">
+                        <f:setPropertyActionListener value="#{item}"
+                                                     target="#{viewDetailsBean.selectedItem}" />
+                    </p:commandButton>
+
+                    <p:commandButton id="likeButton"
+                                     title="Like this picture"
+                                     styleClass="ui-button-icon-only secondary small"
+                                     icon="ui-icon-star"
+                                     ajax="false"
+                                     style="float: right; width: 40px; height:25px"
+                                     action="#{item.addLike()}"
+                                     update="imageTable"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+
+        <h:form enctype="multipart/form-data">
+            <!--ADD DIALOG-->
+            <p:dialog id="addDialog"
+                      widgetVar="addDialog"
+                      modal="true"
+                      resizable="false"
+                      header="Add new image">
+
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="Select image to upload"/>
+
+                    <p:fileUpload value="#{uploadInRam.file}"
+                                  mode="simple"
+                                  allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
+
+                    <p:outputLabel value="Describe the picture"/>
+                    <h:inputText value="#{adminBean.newItem.description}"/>
+                </p:panelGrid>
+                <br/>
+
+                <p:commandButton id="addOkButton"
+                                 value="Ok"
+                                 style="float: right; height: 45px"
+                                 ajax="false"
+                                 actionListener="#{uploadInRam.makeBuffer}"
+                                 action="#{adminBean.addNewItem}"
+                                 update="imageTable"
+                                 onclick="addDialog.hide()"/>                
+
+
+                <h:outputText value="     "/>
+
+                <p:commandButton id="addCancelButton"
+                                 value="Cancel"
+                                 style="float: right; height: 45px"
+                                 ajax="false"
+                                 onclick="addDialog.hide()"/>
+            </p:dialog>
+        </h:form>
+    </h:body>
+</html>
+

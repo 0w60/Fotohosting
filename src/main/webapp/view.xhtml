@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>IMAGE VIEW</title>
+    </h:head>
+    <h:body>
+        <h:form enctype="multipart/form-data">
+            <p:graphicImage id="viewImage"
+                            value="#{viewDetailsBean.image}">
+                <f:param id="viewImageId"
+                         name="viewImageId"
+                         value="#{viewDetailsBean.selectedItem.imageId}"/>
+            </p:graphicImage>
+
+            <p:panelGrid columns="2"
+                         id="viewPanel">
+                <p:outputLabel value="Description:"/>
+                <p:outputLabel value="#{viewDetailsBean.selectedItem.description}"/>
+
+                <p:outputLabel value="Date:"/>
+                <p:outputLabel value="#{viewDetailsBean.selectedItem.date}"/>
+
+                <p:outputLabel value="Count of likes"/>
+                <p:outputLabel value="#{viewDetailsBean.selectedItem.countOfLikes}"/>
+
+                <p:outputLabel value="Comments"/>
+                <p:dataList id="commentsList"
+                            value="#{viewDetailsBean.selectedItem.commentsList}"
+                            var="comment">
+                    #{comment}
+                </p:dataList>
+            </p:panelGrid>
+            <br/>
+            <p:commandButton id="downloadButton"
+                             value="Download"
+                             ajax="false"
+                             icon="ui-icon-disk">
+                <p:fileDownload value="#{viewDetailsBean.dowloadedFile}" />  
+            </p:commandButton>
+            
+            <p:commandButton value="Add comment"
+                             onclick="addCommentDialog.show()"/>
+
+            <p:commandButton value="Back"
+                             style="float: left"
+                             action="index">
+            </p:commandButton>
+
+            <!--ADD COMMENT DIALOG-->
+            <p:dialog id="addCommentDialog"
+                      widgetVar="addCommentDialog"
+                      modal="true"
+                      resizable="false"
+                      header="Add new comment">
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="Your comment:"/>
+                    <h:inputText value="#{viewDetailsBean.selectedItem.comment}"/>
+                </p:panelGrid>
+                <br/>
+                <p:commandButton id="addCommentOkButton"
+                                 value="OK"
+                                 ajax="false"
+                                 style="float: right; height:45px"
+                                 styleClass="secondary small"
+                                 update="viewPanel"
+                                 oncomplete="addCommentDialog.hide()"/>
+
+                <h:outputText value="     "/>
+
+                <p:commandButton id="addCancelButton"
+                                 value="Cancel"
+                                 style="float: right; height: 45px"
+                                 styleClass="secondary small"
+                                 ajax="false"
+                                 update="addCommentDialog"
+                                 onclick="addCommentDialog.hide()"/>
+            </p:dialog>
+
+        </h:form>
+    </h:body>
+</html>
+
