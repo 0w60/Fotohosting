@@ -81,14 +81,14 @@ public class Item {
     }
 
     public void setComment(String comment) {
-        commentsList.add(comment);
+        this.comment = comment;
     }
 
     public List<String> getCommentsList() {
         return commentsList;
     }
 
-    public void setCommentsList(List<String> commentsList) {
-        this.commentsList = commentsList;
+    public void addCommentToCommentsList() {
+        commentsList.add(comment);
     }
 }
