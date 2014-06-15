@@ -1,4 +1,4 @@
-package com.engagepoint.fotohost.controller;
+package artem.fotohost.controller;
 
 import java.io.IOException;
 import java.io.Serializable;

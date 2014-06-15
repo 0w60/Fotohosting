@@ -1,4 +1,4 @@
-package com.engagepoint.fotohost.model;
+package artem.fotohost.model;
 
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;

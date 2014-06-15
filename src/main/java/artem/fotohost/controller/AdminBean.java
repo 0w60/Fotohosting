@@ -1,6 +1,6 @@
-package com.engagepoint.fotohost.controller;
+package artem.fotohost.controller;
 
-import com.engagepoint.fotohost.model.Item;
+import artem.fotohost.model.Item;
 import java.io.IOException;
 import java.io.Serializable;
 import javax.enterprise.context.RequestScoped;

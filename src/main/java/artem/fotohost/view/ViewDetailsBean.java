@@ -1,8 +1,8 @@
-package com.engagepoint.fotohost.view;
+package artem.fotohost.view;
 
-import com.engagepoint.fotohost.controller.Dao;
-import com.engagepoint.fotohost.controller.UploadInRam;
-import com.engagepoint.fotohost.model.Item;
+import artem.fotohost.controller.Dao;
+import artem.fotohost.controller.UploadInRam;
+import artem.fotohost.model.Item;
 import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
